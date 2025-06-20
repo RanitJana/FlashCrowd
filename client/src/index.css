@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .overflow-y-auto::-webkit-scrollbar {
-    width: 8px;
+   display: none;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
