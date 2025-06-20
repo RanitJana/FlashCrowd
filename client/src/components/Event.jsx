@@ -14,8 +14,8 @@ const Event = () => {
   ];
 
   return (
-    <div className="bg-amber-50 p-5 rounded-lg shadow-md h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold text-amber-800 mb-3 sticky top-0 bg-amber-50 pb-2 z-10">Upcoming Events</h2>
+    <div className="bg-amber-50 p-5 pt-0 rounded-lg shadow-md h-full overflow-y-auto">
+      <h2 className="text-2xl font-bold text-amber-800 mb-3 sticky top-0 py-3 bg-amber-50 pb-2 z-10">Upcoming Events</h2>
       
       <div className="space-y-4 pr-2">
         {events.map(event => (
