@@ -6,8 +6,10 @@ export default function App() {
 
   return (
     <>
-    <Map />
-    <Event/>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white gap-5">
+      <Map />
+      <Event />
+    </div>
     </>
   )
 
