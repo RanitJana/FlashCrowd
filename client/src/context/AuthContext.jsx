@@ -22,10 +22,12 @@ function AuthContext({ children }) {
         (async () => {
             if (!user) return;
             const response = await handleLogin(user);
-            if (!response?.data.success)
-                return alert("Login failed. Please try again.");
-
-            dispatch(setAuth(user));
+            if (response?.data.user) {
+                dispatch(setAuth(response.data.user));
+            }
+            else {
+                console.error("Login failed:", response?.error || "Unknown error");
+            }
 
         })()
     }, [dispatch, user])

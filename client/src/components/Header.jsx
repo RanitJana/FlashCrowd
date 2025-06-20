@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 const Header = () => {
 
-    const user = useSelector(info => info.authReducer.auth)
-    console.log("User Info:", user?.picture);
+  const user = useSelector(info => info.authReducer.auth)
+  console.log("User Info:", user);
 
   return (
     <header className=" shadow-sm ">
@@ -13,7 +13,7 @@ const Header = () => {
           {/* Logo/Project Name */}
           <div className="flex-shrink-0 flex items-center">
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                FlashCrowd
+              FlashCrowd
             </h1>
           </div>
 
@@ -27,10 +27,10 @@ const Header = () => {
 
             {/* User Profile */}
             <div className="flex items-center hover:cursor-pointer">
-              {user?.picture ? (
+              {user?.avatar ? (
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={user?.picture}
+                  src={user?.avatar}
                   alt="User profile"
                 />
               ) : (
@@ -38,9 +38,9 @@ const Header = () => {
                   <User className="h-5 w-5 text-gray-500" />
                 </div>
               )}
-              {user?.name && (
+              {user?.fullName && (
                 <span className="ml-2 text-sm font-medium text-white ">
-                  {user.name}
+                  {user.fullName}
                 </span>
               )}
             </div>
@@ -57,10 +57,10 @@ const Header = () => {
             {/* User Profile */}
             <button className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">User profile</span>
-              {user?.picture ? (
+              {user?.avatar ? (
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={user?.picture}
+                  src={user?.avatar}
                   alt="User profile"
                 />
               ) : (
