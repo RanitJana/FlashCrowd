@@ -2,6 +2,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import toast from 'react-hot-toast';
 
 const interestsOptions = [
   "Football", "Cricket", "Badminton", "Basketball", "Volleyball",
@@ -36,7 +37,20 @@ const UserProfileForm = () => {
 
   const onSubmit = (data) => {
     console.log('Form submitted:', data);
-    alert('Profile submitted successfully!');
+
+    // Here you would typically send the data to your backend API
+    
+    toast.success('Profile updated successfully!', {
+      duration: 3000,
+      position: 'top-right',
+      style: {
+        background: '#4CAF50',
+        color: '#fff',
+        fontSize: '16px',
+        padding: '10px 20px',
+        borderRadius: '8px'
+      }
+    });
   };
 
   return (
