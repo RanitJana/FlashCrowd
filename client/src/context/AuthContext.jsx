@@ -1,19 +1,29 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     CivicAuthProvider,
     UserButton,
     useToken
 } from "@civic/auth/react";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuth } from '../features/auth.slice.js';
+
 function AuthContext({ children }) {
 
     const iframeContainerRef = useRef(null);
     const tokenInfo = useToken();
+    const dispatch = useDispatch();
+
+    const auth = useSelector(info => info.authReducer.auth)
 
     useEffect(() => {
         console.log(tokenInfo);
+        // dispatch(setAuth(tokenInfo));
+    }, [dispatch, tokenInfo])
 
-    }, [tokenInfo])
+    useEffect(() => {
+        console.log(auth)
+    }, [auth])
 
     return (
         <>
@@ -26,7 +36,9 @@ function AuthContext({ children }) {
                 targetContainerElement={iframeContainerRef}
             >
                 <UserButton />
-                {children}
+                {
+                    auth && children
+                }
             </CivicAuthProvider>
         </>
     );
