@@ -3,6 +3,7 @@ import Event from "./components/Event";
 
 export default function App() {
   return (
+    <>
     <div className="w-full h-screen flex flex-col lg:flex-row gap-5">
       {/* Map Section */}
       <div className="h-3/5 lg:h-full lg:w-2/3 overflow-auto">
@@ -18,5 +19,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
