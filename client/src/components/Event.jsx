@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 const Event = () => {
   // Dummy event data
   const events = [
@@ -12,6 +14,9 @@ const Event = () => {
     { id: 9, name: "Science Fair", date: "2023-06-25", location: "University Campus", attendees: 700 },
     { id: 10, name: "Fashion Show", date: "2023-08-15", location: "Luxury Hotel", attendees: 600 }
   ];
+
+      const auth = useSelector(info => info.authReducer.auth)
+      console.log("----------->",auth.picture);
 
   return (
     <div className="bg-amber-50 p-5 pt-0 rounded-lg shadow-md h-full overflow-y-auto">
