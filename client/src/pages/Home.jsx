@@ -6,29 +6,34 @@ import Header from "../components/Header.jsx";
 export default function Home() {
     return (
         <>
-            <Header />
-            <div className="w-full h-screen flex flex-col lg:flex-row gap-5">
-                <div className="max-w-7xl mx-auto w-full h-full flex flex-col lg:flex-row gap-5 p-5">
+            {/* Main screen: Header + Map + Events, fixed to screen height */}
+            <div className="flex flex-col h-screen overflow-hidden">
+                {/* Header */}
+                <div className="shrink-0">
+                    <Header />
+                </div>
 
+                {/* Map + Event layout */}
+                <div className="flex flex-1 flex-col lg:flex-row gap-5 p-5 overflow-hidden">
                     {/* Map Section */}
-                    <div className="h-3/5 lg:h-full lg:w-2/3 overflow-auto">
-                        <div className="w-full h-full shadow-lg ">
+                    <div className="lg:w-2/3 h-1/2 lg:h-full overflow-hidden">
+                        <div className="w-full h-full shadow-lg rounded-lg overflow-hidden">
                             <Map />
                         </div>
                     </div>
 
                     {/* Event Section */}
-                    <div className="h-2/5 lg:h-full lg:w-1/3 overflow-auto">
-                        <div className="w-full h-full shadow-lg ">
+                    <div className="lg:w-1/3 h-1/2 lg:h-full overflow-hidden">
+                        <div className="w-full h-full shadow-lg rounded-lg overflow-auto">
                             <Event />
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Add Event Section */}
-            <div className="w-full h-1/5 p-5">
-                <div className="w-full h-full shadow-lg bg-white rounded-lg">
+            {/* Below-screen Add Event section */}
+            <div className="w-full p-5">
+                <div className="w-full shadow-lg bg-white rounded-lg">
                     <AddEvent />
                 </div>
             </div>

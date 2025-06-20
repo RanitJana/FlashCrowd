@@ -42,7 +42,7 @@ function AuthContext({ children }) {
     }, [dispatch, login, user]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div className="min-h-screen bg-gradient-to-br h-fit from-gray-900 to-gray-800 text-white">
             <div
                 ref={iframeContainerRef}
                 id="civic-iframe-container"
