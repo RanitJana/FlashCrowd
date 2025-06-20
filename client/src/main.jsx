@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client'
+import { Toaster } from 'react-hot-toast';
 import './index.css'
 import App from './App.jsx'
 import AuthContext from './context/AuthContext.jsx'
@@ -8,6 +9,7 @@ import { store } from './app/store.js'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <AuthContext>
+      <Toaster />
       <App />
     </AuthContext>
   </Provider>

@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
+import userRoute from "./routes/user.route.js";
 
 import { _env } from "./constant.js";
 
@@ -35,5 +36,7 @@ app.get("/", (req, res) => {
     message: "Home",
   });
 });
+
+app.use("/api/v1/login", userRoute);
 
 export default app;

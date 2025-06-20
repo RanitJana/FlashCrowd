@@ -1,85 +1,60 @@
-import User from "../models/user.model";
-import AsyncHandler from "../utils/AsyncHandler";
+import { cookieOptions } from "../constant.js";
+import userSchema from "../models/user.model.js";
+import AsyncHandler from "../utils/AsyncHandler.js";
 
+const generateAccessAndRefreshTokens = async (userId) => {
+  const user = await userSchema.findById(userId);
 
-const getUserInfo = async (accessToken) => {
-    const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    });
+  // generate Access and Refresh Token,
+  const accessToken = user.generateAccessToken();
+  const refreshToken = user.generateRefreshToken();
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch user info");
-    }
+  // Update refresh Token into db
+  user.refreshToken = refreshToken;
+  await user.save({ validateBeforeSave: false });
 
-    const data = await response.json();
-    console.log("User info:", data);
-    return data;
+  // return Access and Refresh Token
+  return { accessToken, refreshToken };
 };
 
-const registerUser = AsyncHandler(async (req, res) => {
+const handleLogin = AsyncHandler(async (req, res) => {
+  const { name, email, picture } = req.body;
 
-    /**
-     * s#1: take ref token from cookies
-     * s#2: decode the token 
-     * s#3: check if the user exists in the database
-     * s#4: if user exists, return the user data
-     * s#5: if user does not exist, create a new user and return the user data
-     */
-
-    // s#1
-    const { accessToken } = req.cookies;
-
-    // s#2
-    const userInfo = await getUserInfo(accessToken);
-    console.log("Decoded user info:", userInfo);
-    if (!userInfo) {
-        return res.status(400).json({
-            success: true,
-            message: "Invalid access token or user info not found"
-        });
-    }
-
-    // s#3
-    const user = await User.findOne({ email: userInfo.email });
-
-    // s#4
-    if (user) {
-        return res
-            .status(200)
-            .json({
-                success: true,
-                message: "User already exists",
-                user: user
-            });
-    }
-
-    // s#5
-    const newUser = await User.create({
-        fullName: userInfo.name,
-        email: userInfo.email,
-        isOAuthUser: true,
-        avatar: userInfo.picture,
-    })
-
-    if (!newUser) {
-        return res.status(500).json({
-            success: false,
-            message: "Failed to create user"
-        });
-    }
-    return res.status(201).json({
-        success: true,
-        message: "User registered successfully",
-        user: newUser
+  if (!name || !email)
+    return res.status(400).json({
+      message: "Please provide all required fields",
     });
 
+  let user = await userSchema.findOne({ email });
+
+  if (!user)
+    user = await userSchema.create({
+      fullName: name,
+      email,
+      avatar: picture,
+      isOAuthUser: true,
+    });
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  user = await userSchema
+    .findById(user._id)
+    .select("-password -refreshToken")
+    .lean();
+
+  res.setHeader("Authorization", `Bearer ${accessToken}`);
+
+  return res
+    .status(201)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json({
+      success: true,
+      message: "Successfully registered",
+      user,
+    });
 });
 
-
-
-export {
-    registerUser,
-
-}
+export { handleLogin };
