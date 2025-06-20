@@ -21,10 +21,11 @@ function AuthContext({ children }) {
     useEffect(() => {
         (async () => {
             if (!user) return;
-            dispatch(setAuth(user));
-            console.log(user);
             const response = await handleLogin(user);
-            console.log(response);
+            if (!response?.data.success)
+                return alert("Login failed. Please try again.");
+
+            dispatch(setAuth(user));
 
         })()
     }, [dispatch, user])
