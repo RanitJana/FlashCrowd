@@ -1,41 +1,73 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+const events = [
+    { name: 'Football Match', position: [51.51, -0.1] },
+    { name: 'Music Party', position: [51.507, -0.08] },
+    { name: 'Tech Meetup', position: [51.52, -0.11] },
+];
 
+const FlyToUser = ({ position }) => {
+    const map = useMap();
+    useEffect(() => {
+        if (position) {
+            map.flyTo(position, 13, { duration: 2 });
+        }
+    }, [position, map]);
+    return null;
+};
 
+const getDistance = (userPos, eventPos) => {
+    const from = L.latLng(userPos[0], userPos[1]);
+    const to = L.latLng(eventPos[0], eventPos[1]);
+    return (from.distanceTo(to) / 1000).toFixed(2); // km
+};
 
 const Map = () => {
+    const [userLocation, setUserLocation] = useState(null);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setUserLocation([pos.coords.latitude, pos.coords.longitude]);
+            },
+            (err) => {
+                console.error("Geolocation error:", err);
+            }
+        );
+    }, []);
+
     return (
-        <div>
-            <h1>My Map App</h1>
-            <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false} style={{ height: "500px", width: "100%" }}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {/* Marker 1 */}
-                <Marker position={[51.505, -0.09]}>
-                    <Popup>
-                        Marker 1 - Central location
-                    </Popup>
-                </Marker>
+        <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "500px", width: "100%" }}>
+            <TileLayer
+                attribution='&copy; OpenStreetMap contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-                {/* Marker 2 */}
-                <Marker position={[51.515, -0.1]}>
-                    <Popup>
-                        Marker 2 - North West
-                    </Popup>
-                </Marker>
+            {userLocation && <FlyToUser position={userLocation} />}
 
-                {/* Marker 3 */}
-                <Marker position={[51.495, -0.08]}>
-                    <Popup>
-                        Marker 3 - South East
-                    </Popup>
+            {userLocation && (
+                <Marker position={userLocation}>
+                    <Popup>You are here</Popup>
                 </Marker>
-            </MapContainer>
-        </div>
-    )
-}
+            )}
 
-export default Map
+            {userLocation &&
+                events.map((event, i) => {
+                    const distance = getDistance(userLocation, event.position);
+                    return (
+                        <Marker key={i} position={event.position}>
+                            <Popup>
+                                <strong>{event.name}</strong><br />
+                                Distance: {distance} km from you
+                            </Popup>
+                        </Marker>
+                    );
+                })}
+        </MapContainer>
+    );
+};
+
+export default Map;

@@ -1,6 +1,12 @@
+import Map from "./components/Map"
+
+
+
 export default function App() {
 
-  return <div>HI</div>
+  return (
+    <Map />
+  )
 
 }
 
