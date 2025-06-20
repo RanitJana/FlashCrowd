@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
@@ -38,11 +39,11 @@ const userSchema = new Schema(
       type: {
         type: String, // Always 'Point'
         enum: ["Point"],
-        required: true,
+        // required: true,
       },
       coordinates: {
         type: [Number], // [longitude, latitude]
-        required: true,
+        // required: true,
       },
     },
     rating: {
@@ -103,7 +104,6 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
-
 
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(

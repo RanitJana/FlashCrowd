@@ -37,6 +37,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/v1/user", userRoute);
+app.use("/api/v1/login", userRoute);
 
 export default app;
