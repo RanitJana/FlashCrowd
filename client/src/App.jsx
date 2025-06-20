@@ -1,5 +1,6 @@
 import Map from "./components/Map";
 import Event from "./components/Event";
+import AddEvent from "./pages/AddEvent";
 
 export default function App() {
   return (
@@ -17,6 +18,13 @@ export default function App() {
           <div className="w-full h-full shadow-lg ">
             <Event />
           </div>
+        </div>
+      </div>
+
+      {/* Add Event Section */}
+      <div className="w-full h-1/5 p-5">
+        <div className="w-full h-full shadow-lg bg-white rounded-lg">
+          <AddEvent />
         </div>
       </div>
     </>
