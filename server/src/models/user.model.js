@@ -89,6 +89,34 @@ const userSchema = new Schema(
 
 userSchema.index({ location: "2dsphere" });
 
+userSchema.methods.generateAccessToken = function () {
+  // jwt.sign(payload, secret, expiry(optional))
+  return jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
+  );
+};
+
+
+userSchema.methods.generateRefreshToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    }
+  );
+};
+
 const User = model("User", userSchema);
 
 export default User;
