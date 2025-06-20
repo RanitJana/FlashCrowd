@@ -2,78 +2,98 @@ import User from "../models/user.model";
 import AsyncHandler from "../utils/AsyncHandler";
 
 
-const getUserInfo = async (accessToken) => {
-    const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    });
+const generateAccessAndRefreshTokens = async (userId) => {      // generate access and refreshtoken and update in db
+    /*
+     * generate Access and Refresh Token,
+     * Update refresh Token into db ( just update refreshToken, else untouched )
+     * return Access and Refresh Token
+     */
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch user info");
+    try {
+        const user = await User.findById(userId);
+
+        // generate Access and Refresh Token,
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+
+        // Update refresh Token into db 
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+
+        // return Access and Refresh Token
+        return { accessToken, refreshToken };
+    } catch (error) {
+        res
+            .status(500)
+            .json({
+                message: "Something went wrong while generating tokens"
+            })
     }
-
-    const data = await response.json();
-    console.log("User info:", data);
-    return data;
 };
+
 
 const registerUser = AsyncHandler(async (req, res) => {
 
     /**
-     * s#1: take ref token from cookies
-     * s#2: decode the token 
-     * s#3: check if the user exists in the database
-     * s#4: if user exists, return the user data
+     * s#1: take input from the req.body
+     * s#2: check if the user exists in the database, or create a new user
+     * s#4: generate access and refresh tokens for the user._id and update in db
      * s#5: if user does not exist, create a new user and return the user data
      */
 
-    // s#1
-    const { accessToken } = req.cookies;
+    const { name, email, picture } = req.body
 
-    // s#2
-    const userInfo = await getUserInfo(accessToken);
-    console.log("Decoded user info:", userInfo);
-    if (!userInfo) {
-        return res.status(400).json({
-            success: true,
-            message: "Invalid access token or user info not found"
-        });
-    }
+    try {
+        const user = await User.findOne({ email });
 
-    // s#3
-    const user = await User.findOne({ email: userInfo.email });
+        if (!user || !name || !email) {
+            user = await User.create({
+                name,
+                email,
+                avatar: picture,
+            })
 
-    // s#4
-    if (user) {
+            if (!user) {
+                return res
+                    .status(400)
+                    .json({
+                        message: "User not created, please try again"
+                    });
+            }
+        }
+
+        const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+            user._id
+        );
+
+        const loggedInUser = await User.findById(user._id).select(
+            "-password -refreshToken"
+        ).lean();
+
+        loggedInUser.refreshToken = refreshToken;
+
+        const options = {
+            httpOnly: true,
+            secure: true,
+        };
+
+        res.setHeader('Authorization', `Bearer ${accessToken}`);
+
         return res
-            .status(200)
+            .status(201)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken, options)
             .json({
-                success: true,
-                message: "User already exists",
-                user: user
+                user: loggedInUser
+            })
+    } catch (error) {
+        return res
+            .status(500)
+            .json({
+                message: "Something went wrong while registering user"
             });
-    }
 
-    // s#5
-    const newUser = await User.create({
-        fullName: userInfo.name,
-        email: userInfo.email,
-        isOAuthUser: true,
-        avatar: userInfo.picture,
-    })
-
-    if (!newUser) {
-        return res.status(500).json({
-            success: false,
-            message: "Failed to create user"
-        });
     }
-    return res.status(201).json({
-        success: true,
-        message: "User registered successfully",
-        user: newUser
-    });
 
 });
 
