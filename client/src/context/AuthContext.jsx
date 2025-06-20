@@ -18,7 +18,7 @@ function AuthContext({ children }) {
 
     useEffect(() => {
         console.log(tokenInfo);
-        // dispatch(setAuth(tokenInfo));
+        dispatch(setAuth(tokenInfo));
     }, [dispatch, tokenInfo])
 
     useEffect(() => {
