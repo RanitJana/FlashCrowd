@@ -21,7 +21,7 @@ const Event = () => {
   return (
     <div className="bg-amber-50 p-5 pt-0 rounded-lg shadow-md h-full overflow-y-auto">
       <h2 className="text-2xl font-bold text-amber-800 mb-3 sticky top-0 py-3 bg-amber-50 pb-2 z-10">Upcoming Events</h2>
-      
+
       <div className="space-y-4 pr-2">
         {events.map(event => (
           <div key={event.id} className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
@@ -34,14 +34,14 @@ const Event = () => {
                 {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
               </span>
             </div>
-            
+
             <div className="mt-2 flex items-center text-sm text-gray-500">
               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
               {event.attendees.toLocaleString()} attendees
             </div>
-            
+
             <button className="mt-3 w-full bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200">
               View Details
             </button>
@@ -49,23 +49,6 @@ const Event = () => {
         ))}
       </div>
 
-      {/* Custom scrollbar styles */}
-      <style jsx>{`
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 8px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: #fef3c7;
-          border-radius: 4px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: #f59e0b;
-          border-radius: 4px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: #d97706;
-        }
-      `}</style>
     </div>
   );
 }
