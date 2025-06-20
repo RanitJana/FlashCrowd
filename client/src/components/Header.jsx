@@ -1,5 +1,6 @@
 import { User, Bell } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
 const Header = () => {
 
@@ -26,24 +27,26 @@ const Header = () => {
             </button>
 
             {/* User Profile */}
+            <Link to="/profile">
             <div className="flex items-center hover:cursor-pointer">
               {user?.avatar ? (
-                <img
+                  <img
                   className="h-8 w-8 rounded-full"
                   src={user?.avatar}
                   alt="User profile"
-                />
-              ) : (
-                <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  />
+                ) : (
+                    <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
                   <User className="h-5 w-5 text-gray-500" />
                 </div>
               )}
               {user?.fullName && (
-                <span className="ml-2 text-sm font-medium text-white ">
+                  <span className="ml-2 text-sm font-medium text-white ">
                   {user.fullName}
                 </span>
               )}
             </div>
+              </Link>
           </div>
 
           {/* Mobile Navigation */}

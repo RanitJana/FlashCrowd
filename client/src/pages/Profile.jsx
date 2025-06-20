@@ -61,7 +61,7 @@ const UserProfileForm = () => {
           <h1 className="text-2xl font-bold text-white mb-6">Create Your Profile</h1>
             <img
               className="w-9 h-9 rounded-full mb-4"
-              src={user?.avatar || 'https://via.placeholder.com/64'}
+              src={user?.avatar || "https://res.cloudinary.com/du4bs9xd2/image/upload/v1750344689/profile_image_srdpjg.png"}
               alt="User Avatar"
             />
         </div>
