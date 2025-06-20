@@ -35,4 +35,10 @@ Object.defineProperties(_env, {
 
 const DB_NAME = "FlashCrowd";
 
-export { _env, DB_NAME };
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+};
+
+export { _env, DB_NAME, cookieOptions };
