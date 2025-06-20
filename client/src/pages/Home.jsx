@@ -1,10 +1,12 @@
 import Map from "../components/Map.jsx";
 import Event from "../components/Event.jsx";
 import AddEvent from "./AddEvent.jsx";
+import Header from "../components/Header.jsx";
 
 export default function Home() {
     return (
         <>
+            {<Header />}
             <div className="w-full h-screen flex flex-col lg:flex-row gap-5">
                 {/* Map Section */}
                 <div className="h-3/5 lg:h-full lg:w-2/3 overflow-auto">
