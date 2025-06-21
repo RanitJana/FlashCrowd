@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents, Popup, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LocationLoading from './LocationLoading';
@@ -56,10 +56,22 @@ const getEventIcon = (type) => {
     });
 };
 
+
+const ClickMarker = ({ onClick }) => {
+    useMapEvents({
+        click(e) {
+            onClick(e.latlng);
+        },
+    });
+    return null;
+}
+
 const Map = ({ events = [], zoomIn = 13 }) => {
 
     const [userLocation, setUserLocation] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [markerPosition, setMarkerPosition] = useState(null);
+
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -87,6 +99,19 @@ const Map = ({ events = [], zoomIn = 13 }) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+
+                <ClickMarker onClick={(latlng) => setMarkerPosition(latlng)} />
+
+                {markerPosition && (
+                    <Marker position={markerPosition}>
+                        <Popup>
+                            Latitude: {markerPosition.lat.toFixed(5)} <br />
+                            Longitude: {markerPosition.lng.toFixed(5)}
+                        </Popup>
+                    </Marker>
+                )}
+
+
                 {
                     userLocation &&
                     <>
