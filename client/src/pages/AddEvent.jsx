@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvent } from "../features/event.slice";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import toast from "react-hot-toast";
 import Map from "../components/Map";
@@ -58,6 +57,13 @@ const AddEvent = () => {
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Add New Event</h2>
 
       <div className="flex flex-col lg:flex-row gap-6">
+
+
+        {/* Map */}
+        <div className="w-full lg:w-1/2 h-[400px] rounded-xl overflow-hidden shadow-xl">
+          <Map events={events} />
+        </div>
+
         {/* Form */}
         <form
           onSubmit={handleSubmit}
@@ -99,11 +105,6 @@ const AddEvent = () => {
             Submit & Add Marker
           </button>
         </form>
-
-        {/* Map */}
-        <div className="w-full lg:w-1/2 h-[400px] rounded-xl overflow-hidden shadow-xl">
-          <Map />
-        </div>
       </div>
     </div>
   );
