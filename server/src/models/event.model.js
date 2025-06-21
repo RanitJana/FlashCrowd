@@ -47,7 +47,7 @@ const eventSchema = new Schema(
         required: true,
       },
     },
-    paricipants: [
+    participants: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
