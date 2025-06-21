@@ -140,10 +140,25 @@ const getOngoingEvents = AsyncHandler(async (req, res) => {
   });
 });
 
+const getUpcomingEvents = AsyncHandler(async (req, res) => {
+  const now = new Date();
+
+  const events = await Event.find({ startTime: { $gt: now } })
+    .populate("host", "fullName avatar")
+    .sort({ startTime: 1 }); // sort by soonest first
+
+  res.status(200).json({
+    success: true,
+    count: events.length,
+    events,
+  });
+});
+
 export {
   createEvent,
   getHostedEvents,
   getParticipatedEvents,
   addParticipant,
   getOngoingEvents,
+  getUpcomingEvents
 };

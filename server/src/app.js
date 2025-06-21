@@ -5,6 +5,7 @@ import compression from "compression";
 import rateLimit from "express-rate-limit";
 import userRoute from "./routes/user.route.js";
 import eventRoute from "./routes/event.route.js";
+import friendRoute from "./routes/friend.router.js";
 
 import { _env } from "./constant.js";
 
@@ -40,5 +41,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/user", userRoute);
 app.use("api/v1/event", eventRoute);
+app.use("api/v1/friend", friendRoute)
 
 export default app;
