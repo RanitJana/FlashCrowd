@@ -47,12 +47,12 @@ const handleLogin = AsyncHandler(async (req, res) => {
   res.setHeader("Authorization", `Bearer ${accessToken}`);
 
   return res
-    .status(201)
+    .status(200)
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
     .json({
       success: true,
-      message: "Successfully registered",
+      message: "Successfully logged in",
       user,
     });
 });
