@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LocationLoading from './LocationLoading';
-import UserMarkar from './UserMarkar';
-import EventMarker from './EventMarker';
+import UserMarkar from './UserMarkar.jsx';
+import EventMarker from './EventMarker.jsx';
 
 // Default user icon
 const defaultIcon = new L.Icon({
@@ -76,9 +76,7 @@ const Map = ({ events = [], zoomIn = 13 }) => {
 
     return (
         <div className="relative h-full w-full rounded-xl overflow-hidden shadow-lg border border-gray-200">
-
             {loading && <LocationLoading />}
-
             <MapContainer
                 center={[20.5937, 78.9629]} // Default India
                 zoom={5}
@@ -89,7 +87,6 @@ const Map = ({ events = [], zoomIn = 13 }) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
                 {
                     userLocation &&
                     <>
@@ -97,7 +94,6 @@ const Map = ({ events = [], zoomIn = 13 }) => {
                         <UserMarkar defaultIcon={defaultIcon} userLocation={userLocation} />
                     </>
                 }
-
                 {userLocation &&
                     events.map((event) => {
                         const distance = getDistance(userLocation, [event.position.lat, event.position.lng]);
