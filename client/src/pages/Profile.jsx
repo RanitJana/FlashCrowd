@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import {
     SignOutButton
 } from "@civic/auth/react";
+import axios from 'axios';
 
 const interestsOptions = [
   "Football", "Cricket", "Badminton", "Basketball", "Volleyball",
@@ -39,8 +40,33 @@ const UserProfileForm = () => {
 
   const bioLength = watch('bio')?.length || 0;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log('Form submitted:', data);
+
+    const {fullName,bio,interest:interests} = await data;
+
+    console.log('Updated Data:', { fullName, bio, interests });
+
+    const updatedUser = {
+      fullName,
+      bio,
+      interest:interests,
+    };
+
+    const res = axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/v1/user/update`, updatedUser,{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        }
+    )
+    console.log('Response:', res);
+
+
+    if (res.status !== 200) {
+        toast.success(res.data.message);
+    }
+
     toast.success('Profile updated successfully!', {
       duration: 3000,
       position: 'top-right',

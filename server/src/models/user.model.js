@@ -61,7 +61,7 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-    interest: [
+    interests:[
       {
         type: String,
         enum: [

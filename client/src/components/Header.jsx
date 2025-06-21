@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const Header = () => {
 
   const user = useSelector(info => info.authReducer.auth)
-  console.log("User Info:", user);
+//   console.log("User Info:", user);
 
   return (
     <header className=" shadow-lg ">
