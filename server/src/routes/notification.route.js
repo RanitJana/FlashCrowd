@@ -6,7 +6,7 @@ import {
   createFriendRequestNoti,
 } from "../controllers/notification.controller.js";
 
-router.route("/friendReq").get(verifyJWT, createFriendRequestNoti);
-router.route("/event").get(verifyJWT, createEventNoti);
+router.route("/friendReq").post(verifyJWT, createFriendRequestNoti);
+router.route("/event").post(verifyJWT, createEventNoti);
 
 export default router;
