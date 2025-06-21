@@ -1,6 +1,4 @@
-import Map from "../components/Map.jsx";
-import Event from "../components/Event.jsx";
-import AddEvent from "./AddEvent.jsx";
+import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
 import { useSelector } from "react-redux";
 import LandingPage from "../components/Landing.jsx";
@@ -19,19 +17,13 @@ export default function Home() {
                 </div>
 
                 <div>
-                    <LandingPage/>
+                    <LandingPage />
                 </div>
 
-                {/* Map + Event layout */}
-                
+
             </div>
 
-            {/* Below-screen Add Event section */}
-            <div className="w-full p-5">
-                <div className="w-full shadow-lg bg-white rounded-lg">
-                    <AddEvent />
-                </div>
-            </div>
+
         </>
     );
 }
