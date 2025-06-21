@@ -44,7 +44,7 @@ const UserProfileForm = () => {
       const { fullName, bio, interests } = data;
       const updatedUser = { fullName, bio,interests };
 
-    //   console.log("Updated User Data:", updatedUser);
+      console.log("Updated User Data:", updatedUser);
 
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URI}/api/v1/user/update`, 
