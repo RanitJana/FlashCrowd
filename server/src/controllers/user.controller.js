@@ -69,9 +69,10 @@ const searchFriends = AsyncHandler(async (req, res) => {
 });
 
 const updateUserInfo = AsyncHandler(async (req, res) => {
-  const { bio, avatar, interest } = req.body;
+  const { fullName, bio, avatar, interest } = req.body;
 
   const updates = {};
+  if (fullName !== undefined) updates.fullName = fullName;
   if (bio !== undefined) updates.bio = bio;
   if (avatar !== undefined) updates.avatar = avatar;
   if (interest !== undefined) updates.interest = interest;
