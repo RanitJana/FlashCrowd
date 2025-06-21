@@ -37,6 +37,11 @@ const createEvent = AsyncHandler(async (req, res) => {
     participants: [req.user._id],
   });
 
+  const participation = await ParticipationSchema.create({
+    user: req.user._id,
+    events: [{ id: event._id }],
+  })
+
   res.status(201).json({
     success: true,
     message: "Event created successfully",
@@ -129,7 +134,7 @@ const addParticipant = AsyncHandler(async (req, res) => {
 const getOngoingEvents = AsyncHandler(async (req, res) => {
   const now = new Date();
 
-  const events = await Event.find({
+  const events = await eventSchema.find({
     startTime: { $lte: now },
     endTime: { $gte: now },
   }).populate("host", "_id name email avatar");
@@ -143,7 +148,7 @@ const getOngoingEvents = AsyncHandler(async (req, res) => {
 const getUpcomingEvents = AsyncHandler(async (req, res) => {
   const now = new Date();
 
-  const events = await Event.find({ startTime: { $gt: now } })
+  const events = await eventSchema.find({ startTime: { $gt: now } })
     .populate("host", "fullName avatar")
     .sort({ startTime: 1 }); // sort by soonest first
 
