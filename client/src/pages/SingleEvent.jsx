@@ -5,6 +5,22 @@ import Map from '../components/Map.jsx'; // Assuming you have a Map component
 
 function SingleEvent() {
   const { id } = useParams();
+  const events = [
+    {
+      id: 1,
+      title: "Tech Conference",
+      description: "A conference for tech enthusiasts.",
+      date: "2023-06-15",
+      location: "Convention Center",
+      startTime: "10:00 AM",
+      endTime: "4:00 PM",
+      attendees: 250,
+      position: {
+        lat: 28.6139,
+        lng: 77.2090,
+      }
+    }
+  ];
 
   useEffect(() => {
     // Fetch event details using the id from the URL
@@ -24,7 +40,7 @@ function SingleEvent() {
             <h2 className="text-2xl font-semibold mb-4">Event Map</h2>
             {/* Placeholder for map component */}
             <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-              {<Map />}
+              {<Map events={events} zoomIn={5} />}
             </div>
           </div>
 
