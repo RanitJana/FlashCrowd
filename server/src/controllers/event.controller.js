@@ -1,4 +1,5 @@
-import AsyncHandler from "../utils/AsyncHandler";
+import eventSchema from "../models/event.model.js";
+import AsyncHandler from "../utils/AsyncHandler.js";
 
 const createEvent = AsyncHandler(async (req, res) => {
   const {
@@ -11,18 +12,19 @@ const createEvent = AsyncHandler(async (req, res) => {
     endTime,
   } = req.body;
 
+  // Validate required fields
   if (
-    [!title, !description, !category, !location, !endTime].some(
-      (field) => field?.trim() === ""
+    [title, description, category, location, endTime].some(
+      (field) => typeof field !== "string" || field.trim() === ""
     )
   ) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: "All fields are required...",
     });
   }
 
-  const event = await Event.create({
+  const event = await eventSchema.create({
     title,
     description,
     category,
@@ -31,7 +33,7 @@ const createEvent = AsyncHandler(async (req, res) => {
     maxLimit: maxLimit || 1,
     startTime,
     endTime,
-    paricipants: [req.user._id],
+    participants: [req.user._id],
   });
 
   res.status(201).json({

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
-import asyncHandler from "express-async-handler";
+import userSchema from "../models/user.model.js";
+import asyncHandler from "../utils/AsyncHandler.js";
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    const user = await User.findById(decodedToken?._id).select(
+    const user = await userSchema.findById(decodedToken?._id).select(
       "-password -refreshToken"
     );
 
