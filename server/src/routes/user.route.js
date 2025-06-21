@@ -9,7 +9,7 @@ router.route("/login").post(handleLogin);
 router.route("/logout").post(handleLogout);
 router
   .route("/update")
-  .post(verifyJWT, upload.single("profilePicture"), updateUserInfo);
+  .put(verifyJWT, upload.single("profilePicture"), updateUserInfo);
 router.route("/search").get(verifyJWT, searchUsers);
 
 export default router;

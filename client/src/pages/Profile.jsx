@@ -42,12 +42,12 @@ const UserProfileForm = () => {
   const onSubmit = async (data) => {
     try {
       const { fullName, bio, interests } = data;
-      const updatedUser = { fullName, bio,interests };
+      const updatedUser = { fullName, bio, interests };
 
-      console.log("Updated User Data:", updatedUser);
+      //   console.log("Updated User Data:", updatedUser);
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/v1/user/update`, 
+      const res = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URI}/api/v1/user/update`,
         updatedUser,
         {
           headers: { 'Content-Type': 'application/json' },
@@ -89,7 +89,7 @@ const UserProfileForm = () => {
             <div className="flex items-center justify-between mb-8">
               <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
               <div className="flex items-center space-x-4">
-                <button 
+                <button
                   onClick={handleSubmit(onSubmit)}
                   className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-full flex items-center space-x-2 transition-all duration-200 shadow-sm hover:shadow-md"
                 >
@@ -128,9 +128,8 @@ const UserProfileForm = () => {
                     <input
                       id="fullName"
                       {...register('fullName')}
-                      className={`w-full px-4 py-3 bg-gray-50 text-gray-900 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
-                        errors.fullName ? 'border-red-300' : 'border-gray-200'
-                      }`}
+                      className={`w-full px-4 py-3 bg-gray-50 text-gray-900 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${errors.fullName ? 'border-red-300' : 'border-gray-200'
+                        }`}
                       placeholder="Enter your full name"
                     />
                     {errors.fullName && (
@@ -149,9 +148,8 @@ const UserProfileForm = () => {
                       id="bio"
                       {...register('bio')}
                       rows={5}
-                      className={`w-full px-4 py-3 bg-gray-50 text-gray-900 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${
-                        errors.bio ? 'border-red-300' : 'border-gray-200'
-                      }`}
+                      className={`w-full px-4 py-3 bg-gray-50 text-gray-900 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all ${errors.bio ? 'border-red-300' : 'border-gray-200'
+                        }`}
                       placeholder="Tell us about yourself (at least 20 characters)"
                     />
                     <div className="flex justify-between mt-2">
@@ -160,9 +158,8 @@ const UserProfileForm = () => {
                       ) : (
                         <p className="text-sm text-gray-500">Minimum 20 characters</p>
                       )}
-                      <p className={`text-sm ${
-                        bioLength < 20 ? 'text-gray-500' : 'text-green-500'
-                      }`}>
+                      <p className={`text-sm ${bioLength < 20 ? 'text-gray-500' : 'text-green-500'
+                        }`}>
                         {bioLength}/20
                       </p>
                     </div>
@@ -195,17 +192,15 @@ const UserProfileForm = () => {
                             />
                             <label
                               htmlFor={`interest-${interest}`}
-                              className={`flex items-center px-4 py-3 border rounded-lg cursor-pointer transition-all ${
-                                field.value.includes(interest)
+                              className={`flex items-center px-4 py-3 border rounded-lg cursor-pointer transition-all ${field.value.includes(interest)
                                   ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
                                   : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
-                              }`}
+                                }`}
                             >
-                              <span className={`flex items-center justify-center w-5 h-5 border rounded mr-3 transition-all ${
-                                field.value.includes(interest)
+                              <span className={`flex items-center justify-center w-5 h-5 border rounded mr-3 transition-all ${field.value.includes(interest)
                                   ? 'bg-indigo-600 border-indigo-600 text-white'
                                   : 'bg-white border-gray-300'
-                              }`}>
+                                }`}>
                                 {field.value.includes(interest) && <FiCheck size={14} />}
                               </span>
                               {interest}
