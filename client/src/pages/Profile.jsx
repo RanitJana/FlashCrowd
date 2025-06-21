@@ -154,12 +154,19 @@ const UserProfileForm = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end pt-4">
+            <div className="flex justify-between pt-4">
               <button
                 type="submit"
                 className="px-6 py-2 bg-indigo-500 hover:bg-indigo-900 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors duration-200 shadow-md"
               >
                 Update Profile
+              </button>
+
+              <button
+                type="submit"
+                className="px-6 py-2 bg-red-500 hover:bgredo-900 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors duration-200 shadow-md"
+              >
+                Log Out
               </button>
             </div>
           </form>
