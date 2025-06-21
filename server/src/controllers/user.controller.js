@@ -1,5 +1,6 @@
 import AsyncHandler from "../utils/AsyncHandler.js";
 import userSchema from "../models/user.model.js";
+import { uploadImage } from "../utils/cloudinary.js";
 
 const searchUsers = AsyncHandler(async (req, res) => {
   const query = req.query.search;
@@ -12,11 +13,11 @@ const searchUsers = AsyncHandler(async (req, res) => {
   }
   const keyword = req.query.search
     ? {
-        $or: [
-          { name: { $regex: query, $options: "i" } },
-          { email: { $regex: query, $options: "i" } },
-        ],
-      }
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ],
+    }
     : {};
 
   const users = await userSchema
@@ -39,6 +40,29 @@ const updateUserInfo = AsyncHandler(async (req, res) => {
   if (bio !== undefined) updates.bio = bio;
   if (avatar !== undefined) updates.avatar = avatar;
   if (interests !== undefined) updates.interests = interests;
+
+  let profilePicPath = "";
+  if (req.file) {
+    profilePicPath = req.file.path;
+  }
+
+  let profilePic = ""
+  if (profilePicPath) {
+    const picName = req.file?.filename;
+    const currentUser = await userSchema.findById(req.user._id);
+
+    // If current avatar is a Cloudinary URL, delete it
+    if (currentUser.avatar && currentUser.avatar.includes("res.cloudinary.com") && currentUser.avatar === "https://res.cloudinary.com/du4bs9xd2/image/upload/v1750344689/profile_image_srdpjg.png") {
+      const segments = currentUser.avatar.split("/");
+      const publicIdWithExtension = segments[segments.length - 1]; // e.g., "filename.jpg"
+      const publicId = publicIdWithExtension.split(".")[0]; // e.g., "filename"
+      await deleteImage(publicId);
+    }
+    profilePic = await uploadImage(profilePicPath, picName);
+  }
+  if (profilePic && profilePic.secure_url) {
+    updates.avatar = profilePic.secure_url;
+  }
 
   if (Object.keys(updates).length === 0) {
     return res.status(400).json({

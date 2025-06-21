@@ -41,8 +41,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/user", userRoute);
-app.use("api/v1/event", eventRoute);
-app.use("api/v1/friend", friendRoute);
-app.use("api/v1/notification", notificationRoute);
+app.use("/api/v1/event", eventRoute);
+app.use("/api/v1/friend", friendRoute);
+app.use("/api/v1/notification", notificationRoute);
 
 export default app;
