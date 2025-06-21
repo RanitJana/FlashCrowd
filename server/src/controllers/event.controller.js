@@ -160,5 +160,5 @@ export {
   getParticipatedEvents,
   addParticipant,
   getOngoingEvents,
-  getUpcomingEvents
+  getUpcomingEvents,
 };

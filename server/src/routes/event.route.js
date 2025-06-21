@@ -1,12 +1,12 @@
 import express from "express";
 const router = express.Router();
 import {
-    addParticipant,
-    createEvent,
-    getHostedEvents,
-    getOngoingEvents,
-    getParticipatedEvents,
-    getUpcomingEvents,
+  addParticipant,
+  createEvent,
+  getHostedEvents,
+  getOngoingEvents,
+  getParticipatedEvents,
+  getUpcomingEvents,
 } from "../controllers/event.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 

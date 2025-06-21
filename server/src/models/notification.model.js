@@ -11,7 +11,7 @@ const notificationSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    friend: {
+    sender: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
