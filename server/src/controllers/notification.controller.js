@@ -1,4 +1,4 @@
-import AsyncHandler from "../utils/AsyncHandler";
+import AsyncHandler from "../utils/AsyncHandler.js";
 import notificationSchema from "../models/notification.model.js";
 import friendSchema from "../models/friend.model.js";
 
