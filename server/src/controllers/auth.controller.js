@@ -57,4 +57,23 @@ const handleLogin = AsyncHandler(async (req, res) => {
     });
 });
 
-export { handleLogin };
+const handleLogout = AsyncHandler(async (req, res) => {
+  const { user } = req.user;
+
+  await userSchema.findByIdAndUpdate(
+    user._id,
+    { refreshToken: null },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json({
+      success: true,
+      message: "Successfully logged out",
+    });
+});
+
+export { handleLogin, handleLogout };

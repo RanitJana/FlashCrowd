@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
 import userRoute from "./routes/user.route.js";
+import eventRoute from "./routes/event.route.js";
 
 import { _env } from "./constant.js";
 
@@ -38,5 +39,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/user", userRoute);
+app.use("api/v1/event", eventRoute)
 
 export default app;
