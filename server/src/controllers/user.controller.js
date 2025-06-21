@@ -1,6 +1,5 @@
 import AsyncHandler from "../utils/AsyncHandler.js";
 import userSchema from "../models/user.model.js";
-import friendSchema from "../models/friend.model.js";
 
 const searchUsers = AsyncHandler(async (req, res) => {
   const query = req.query.search;
@@ -31,51 +30,15 @@ const searchUsers = AsyncHandler(async (req, res) => {
   });
 });
 
-const searchFriends = AsyncHandler(async (req, res) => {
-  const { query } = req.query.search;
-
-  if (!query || query.trim() === "") {
-    return res.status(400).json({
-      success: false,
-      message: "Search query is required.",
-    });
-  }
-
-  const userId = req.user._id;
-
-  const friendships = await friendSchema.find({
-    status: "accepted",
-    $or: [{ sender: userId }, { receiver: userId }],
-  });
-
-  const friendIds = friendships.map((f) =>
-    f.sender.toString() === userId.toString() ? f.receiver : f.sender
-  );
-
-  const matchedFriends = await friendSchema
-    .find({
-      _id: { $in: friendIds },
-      $or: [
-        { fullName: { $regex: query, $options: "i" } },
-        { email: { $regex: query, $options: "i" } },
-      ],
-    })
-    .select("-password -refreshToken");
-
-  res.status(200).json({
-    success: true,
-    friends: matchedFriends,
-  });
-});
-
 const updateUserInfo = AsyncHandler(async (req, res) => {
-  const { fullName, bio, avatar, interest } = req.body;
+  const { fullName, bio, avatar, interests } = req.body;
+  console.log(req.body);
 
   const updates = {};
   if (fullName !== undefined) updates.fullName = fullName;
   if (bio !== undefined) updates.bio = bio;
   if (avatar !== undefined) updates.avatar = avatar;
-  if (interest !== undefined) updates.interest = interest;
+  if (interests !== undefined) updates.interests = interests;
 
   if (Object.keys(updates).length === 0) {
     return res.status(400).json({
@@ -97,4 +60,4 @@ const updateUserInfo = AsyncHandler(async (req, res) => {
   });
 });
 
-export { searchUsers, searchFriends, updateUserInfo };
+export { searchUsers, updateUserInfo };
