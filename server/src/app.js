@@ -5,7 +5,7 @@ import compression from "compression";
 import rateLimit from "express-rate-limit";
 import userRoute from "./routes/user.route.js";
 import eventRoute from "./routes/event.route.js";
-import friendRoute from "./routes/friend.router.js";
+import friendRoute from "./routes/friend.route.js";
 import notificationRoute from "./routes/notification.route.js";
 
 import { _env } from "./constant.js";
