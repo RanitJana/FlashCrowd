@@ -90,12 +90,8 @@ const UserProfileForm = () => {
                       src={user?.avatar || "https://res.cloudinary.com/du4bs9xd2/image/upload/v1750344689/profile_image_srdpjg.png"}
                       alt="User Avatar"
                     />
-                    <button
-                      type="button"
-                      className="text-sm text-indigo-400 hover:text-indigo-300"
-                    >
-                      Change Photo
-                    </button>
+                    
+                    
                   </div>
 
                   {/* Full Name */}
