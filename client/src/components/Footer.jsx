@@ -57,46 +57,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* App Download Section */}
-                <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-6 mb-6">
-                    <div className="flex items-center mb-4 md:mb-0">
-                        <span className="font-bold text-lg mr-2 text-white">GETTOR!</span>
-                        <div className="flex items-center bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded transition-colors cursor-pointer">
-                            <SiGoogleplay className="mr-2" />
-                            <span>Google Play</span>
-                        </div>
-                    </div>
-                    <div className="flex items-center">
-                        <span className="font-bold text-lg mr-2 text-white">Save to Live</span>
-                        <div className="flex items-center bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded transition-colors cursor-pointer">
-                            <AiFillApple className="mr-2" />
-                            <span>App Store</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Search and Legal Section */}
-                <div className="border-t border-gray-700 pt-6">
-                    <div className="mb-4">
-                        <input
-                            type="text"
-                            placeholder="Type here to search"
-                            className="w-full md:w-1/3 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400"
-                        />
-                    </div>
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="text-gray-400 mb-4 md:mb-0">
-                            © 2025 Meetup
-                        </div>
-                        <div className="flex flex-wrap gap-4">
-                            <Link to="/terms" className="hover:text-indigo-400 transition-colors">Terms of Service</Link>
-                            <Link to="/privacy" className="hover:text-indigo-400 transition-colors">Privacy Policy</Link>
-                            <Link to="/cookies" className="hover:text-indigo-400 transition-colors">Cookie Policy</Link>
-                            <Link to="/license" className="hover:text-indigo-400 transition-colors">License Attribution</Link>
-                            <Link to="/help" className="hover:text-indigo-400 transition-colors">Help</Link>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </footer>
     );
