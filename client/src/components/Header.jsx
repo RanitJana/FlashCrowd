@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header className=" shadow-sm ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 py-1 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Project Name */}
           <div className="flex-shrink-0 flex items-center">
@@ -28,25 +28,25 @@ const Header = () => {
 
             {/* User Profile */}
             <Link to="/profile">
-            <div className="flex items-center hover:cursor-pointer">
-              {user?.avatar ? (
+              <div className="flex items-center hover:cursor-pointer">
+                {user?.avatar ? (
                   <img
-                  className="h-8 w-8 rounded-full"
-                  src={user?.avatar}
-                  alt="User profile"
+                    className="h-10 w-10 rounded-full"
+                    src={user?.avatar}
+                    alt="User profile"
                   />
                 ) : (
-                    <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <User className="h-5 w-5 text-gray-500" />
-                </div>
-              )}
-              {user?.fullName && (
+                  <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                    <User className="h-5 w-5 text-gray-500" />
+                  </div>
+                )}
+                {user?.fullName && (
                   <span className="ml-2 text-sm font-medium text-white ">
-                  {user.fullName}
-                </span>
-              )}
-            </div>
-              </Link>
+                    {user.fullName}
+                  </span>
+                )}
+              </div>
+            </Link>
           </div>
 
           {/* Mobile Navigation */}
