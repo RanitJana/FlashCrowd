@@ -2,8 +2,12 @@ import Map from "../components/Map.jsx";
 import Event from "../components/Event.jsx";
 import AddEvent from "./AddEvent.jsx";
 import Header from "../components/Header.jsx";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+
+    const events = useSelector((state) => state.event.events); // Fetch events from Redux store
+
     return (
         <>
             {/* Main screen: Header + Map + Events, fixed to screen height */}
@@ -18,7 +22,7 @@ export default function Home() {
                     {/* Map Section */}
                     <div className="lg:w-2/3 h-1/2 lg:h-full overflow-hidden">
                         <div className="w-full h-full shadow-lg rounded-lg overflow-hidden">
-                            <Map />
+                            <Map events={events} />
                         </div>
                     </div>
 
