@@ -8,15 +8,17 @@ const Header = () => {
   console.log("User Info:", user);
 
   return (
-    <header className=" shadow-sm ">
+    <header className=" shadow-lg ">
       <div className="mx-auto px-4 py-1 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Project Name */}
+          <Link to="/" className="flex-shrink-0">
           <div className="flex-shrink-0 flex items-center">
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
               FlashCrowd
             </h1>
           </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
@@ -58,20 +60,22 @@ const Header = () => {
             </button>
 
             {/* User Profile */}
-            <button className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <Link to="/profile" className="flex items-center">
+
               <span className="sr-only">User profile</span>
               {user?.avatar ? (
-                <img
+                  <img
                   className="h-8 w-8 rounded-full"
                   src={user?.avatar}
                   alt="User profile"
-                />
-              ) : (
-                <div className="h-8 w-8 rounded-full flex items-center justify-center">
+                  />
+                ) : (
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center">
                   <User className="h-5 w-5 text-gray-500" />
                 </div>
               )}
-            </button>
+              </Link>
+            
           </div>
         </div>
       </div>
