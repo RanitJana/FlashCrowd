@@ -2,10 +2,7 @@ import express from "express";
 const router = express.Router();
 import { handleLogin, handleLogout } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import {
-  searchUsers,
-  updateUserInfo,
-} from "../controllers/user.controller.js";
+import { searchUsers, updateUserInfo } from "../controllers/user.controller.js";
 import upload from "../utils/multer.js";
 
 router.route("/login").post(handleLogin);
