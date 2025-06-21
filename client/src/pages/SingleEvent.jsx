@@ -34,7 +34,7 @@ function SingleEvent() {
     <div className="flex flex-col min-h-screen w-full text-black">
       <Header />
       <div className="flex flex-col flex-1">
-        <h1 className="text-4xl font-bold text-center my-6 text-white">{event.title}</h1>
+        <h1 className="text-4xl font-bold text-center my-6 text-white">Event details</h1>
 
         <div className="flex flex-1 flex-col lg:flex-row gap-6 px-6 pb-6 overflow-hidden">
           {/* Map Section */}
